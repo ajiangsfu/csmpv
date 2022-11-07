@@ -23,7 +23,7 @@
 #' @export
 
 confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomks = NULL, allmks = FALSE, outputname = "test",
-                       outcomeType = c("binary","continuous","time-to-event"), Y = NULL, time = NULL, event = NULL){
+                       outcomeType = c("binary","continuous","time-to-event"), Y = NULL, time = NULL, event = NULL, outfile = "someName"){
   if(is.null(data)){
     stop("Please input a data set")
   }
@@ -31,29 +31,90 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
    data = standardize(data, byrow = !columnWise)
   }
 
+  aout = NA
+  alls = NA
+  
   if(outcomeType == "binary"){
     ## check one variable at a time
-    aout = sapply(biomks, function(aX){
+    aout = lapply(biomks, function(aX){
       res = glmBinary(data,Y,aX)
     })
     
-    ## combine all models together for forest plot
-    
-    
-    ## combine all numbers together to write out
-    
     ## if allmks is TRUE, run a multivariable model
-    
-    ## also write out number results and generate forest plot
+    if(allmks == TRUE){
+      alls = glmBinary(data,Y,biomks)
+    }
     
   }else if(outcomeType == "continuous"){
+    ## check one variable at a time
+    aout = lapply(biomks, function(aX){
+      res = lmContinuous(data,Y,aX)
+    })
+    
+    ## if allmks is TRUE, run a multivariable model
+    if(allmks == TRUE){
+      alls = lmContinuous(data,Y,biomks)
+    }
     
   }else if(outcomeType == "time-to-event"){
+    aout = lapply(biomks, function(aX){
+      res = coxTimeToEvent(data, time, event, aX)
+    })
+    
+    ## if allmks is TRUE, run a multivariable model
+    if(allmks == TRUE){
+      alls = coxTimeToEvent(data, time, event, biomks)
+    }
     
   }else{
     stop("Please select the correct outcome type")
   }
+  
+  ## each output of a biomk is a list, which contains two items: fit object and fit coef
+  
+  ## combine all models together for forest plot
+  fitout = lapply(aout, function(xx){
+    xx= xx[[1]]
+    xx = forestmodel::forest_model(xx, format_options = forest_model_format_options(text_size= 4, point_size = 4)) +
+      theme(axis.text.x = element_text(size=4))
+    return(xx)
+  }) 
+  
+  kk = length(fitout)
+  
+  outplot = paste0(outfile, "3.pdf")
+  pdf(outplot, height = kk, width = 7)
+  ggarrange(plotlist = fitout, ncol=1, nrow=kk)
+  dev.off()
+  
+  ## combine all numbers together to write out
+  coeout = lapply(aout, function(xx){
+    xx= xx[[2]]
+    return(xx)
+  }) 
+  
+  coes = do.call(rbind, coeout)
+  ## should I keep Intercept for all models, maybe it is a good idea to keep to avoid confusion?
+  
+  if(rownames(coes)[1] == "1"){
+    rownames(coes) = biomks
+  }
+  
+  coeout = paste0(outfile, "3.csv")
+  write.csv(coes, coeout)
 
+  xx= alls[[1]]
+  aplot = paste("allMarks",outplot, sep="_")
+  pdf(aplot, height = ceiling(kk/2), width = 7)
+  forestmodel::forest_model(xx, format_options = forest_model_format_options(text_size= 4, point_size = 4)) +
+    theme(axis.text.x = element_text(size=4))
+  dev.off()
+  
+  acoe = alls[[2]]
+  acoeOut = gsub("pdf", "csv", aplot)
+  write.csv(acoe, acoeOut)
+  
+  
 }
 
 
@@ -76,6 +137,19 @@ tmp = colnames(dat)[tmp]
 bn = 5
 biomks = sample(tmp, size = bn)
 allmks = TRUE
-outcomeType = "binary"
-Y = "CODE_postBMTFFS"
+#outcomeType = "binary"
+#Y = "CODE_postBMTFFS"
+
+## test for cont Y
+Y = "postBMTFFS"
+outcomeType = "continuous"
+
+## test for time to event
+outcomeType = "time-to-event"
+time = "postBMTFFS"
+event = "CODE_postBMTFFS"
+## all codes are working now! of course, I need to use the code file with latested date, if there are multiple files for same functions
+
+### in the very end,before I package the file, I should start a new folder to save final version of code 
+### and replace the whole folder if I want to make any changes
 

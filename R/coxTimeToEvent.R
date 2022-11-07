@@ -8,10 +8,10 @@ coxTimeToEvent = function(datain, time, event, Xin){
   ## the outcome type is time to event, so, there are two outcome variable names: time and event
   ## Xin is one x variable, or a group of x variables
 
-  survY = paste0("Surv(", time,",", event, ")")
+  survY = paste0("survival::Surv(", time,",", event, ")")
   survX = paste(Xin, collapse=" + ")
   
-  fit1 = coxph(as.formula(paste(survY, survX, sep=" ~ ")), data = data)
+  fit1 = survival::coxph(as.formula(paste(survY, survX, sep=" ~ ")), data = data)
   
   ## the following part is from my old function: coxphOutput
   

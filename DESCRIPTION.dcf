@@ -7,10 +7,10 @@ Maintainer: Aixiang Jiang <aijiang@bccrc.ca> <jiangaixiang@gmail.com>
 Depends: R (>= 4.0)
 Suggests: knitr
 VignetteBuilder: knitr
-Imports: survival, glmnet, PRPS, xgboost, randomForestSRC, survivalsvm. forestmodel, ggpubr
+Imports: survival, glmnet, rms, forestmodel, ggpubr
 Description: 
-    This package is used for known biomarker confirmation, novel biomarker discovery with variable selection, biomarker predictive modeling
-    build-up, prediction and validation. All analysis is done at sample or patient level for either binary, or contiunous, or time-to-event outcome. 
+    This package is used for known biomarker confirmation, novel biomarker discovery with variable selection, biomarker predictive model
+    buildup, prediction and validation. All analysis is done at sample or patient level for either binary, or contiunous, or time-to-event outcome. 
     Biomarker confirmation is based on existing functions from other R packages, while variable selection or biomarker discovery is based on our
     new LASSO_plus functions. Predictive models are built-up with rms package and used for prediction/validation when a testing data set is comparable to 
     the training data set. When a testing data set is not so close to the training data set, validation could be tough, which is done with our new 

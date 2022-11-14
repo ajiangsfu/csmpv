@@ -1,5 +1,5 @@
-#' LASSO_plus for variable selection 
-#' @description This is the wrap up function to select variables that are associated with an outcome variable based on my new algorithm: LASSO_plus. 
+#' LASSO_plus for variable selection and model buildup with traditional R functions: lm, glm, and coxph
+#' @description This is the wrap up function to select variables that are associated with an outcome variable and build up a model based on my new algorithm: LASSO_plus. 
 #' @details This function is to use LASSO_plus algorithm to select variables that are assoicated with on an outcome variable for a given data set.
 #' An outcome variable could be a binary, continuous, or time-to-event variable. LASSO_plus selects variables based on LASSO, single variable regession, 
 #' and stepwise regression.  
@@ -15,12 +15,8 @@
 #' @param topN An interger to indicate how many variables we intend to select 
 #' @keywords variable selection
 #' @author Aixiang Jiang
-#' @return A list with three items is returned: 
-#' 
-#' do it later
-#' 
-#' \item{name}{content}
-#' \item{}{}
+#' @return A model is returned: 
+#' \item{fit}{a model with selected variables for the given outcome variable}
 #' @references 
 #' 
 #' @export
@@ -65,11 +61,12 @@ LASSO_plus = function(data = NULL, standardization = FALSE, columnWise = TRUE, b
   acoe = alls[[2]]
   acoeOut = gsub("pdf", "csv", aplot)
   write.csv(acoe, acoeOut)
-  
+  fit = alls[[1]]
+  return(fit) ## save the model and coefs for future use
 }
 
 
-############# testing code ###########
+############# testing code, will remove later ###########
 ## read in data first:
 library(rstudioapi)
 current_working_dir = dirname(rstudioapi::getActiveDocumentContext()$path)

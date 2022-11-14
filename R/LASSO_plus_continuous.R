@@ -1,9 +1,6 @@
 #' A function rather aimed at developers
 #' @noRd
-#' 
-#' 
-#' 
-#' write it as an internal function for now, may change it later to be a function that can be used with help file
+
 
 LASSO_plus_continuous = function(data, biomks,  Y, topN = 10){
   
@@ -118,18 +115,3 @@ LASSO_plus_continuous = function(data, biomks,  Y, topN = 10){
   return(list(fit,coefs))
   
 }
-
-
-### I put the R code file and the data file under the same folder:
-library(rstudioapi)
-current_working_dir = dirname(rstudioapi::getActiveDocumentContext()$path)
-
-setwd(current_working_dir)
-
-dat = read.csv("../../exampleData/proteinPerc_ASCT1_postBMTFFS_49ids_20220331.csv")
-
-tmp = grep("_Percent$", colnames(dat))
-vars = colnames(dat)[tmp]
-
-out = LASSO_plus_continuous(data = dat,  biomks = vars,  Y = "postBMTFFS", topN = 10)
-

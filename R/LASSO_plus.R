@@ -1,8 +1,9 @@
-#' LASSO_plus for variable selection and model buildup with traditional R functions: lm, glm, and coxph
-#' @description This is the wrap up function to select variables that are associated with an outcome variable and build up a model based on my new algorithm: LASSO_plus. 
+#' LASSO_plus is for variable selection, and model buildup with the most commonly used R functions: lm, glm, and coxph for different outcome type.
+#' @description This is the wrap up function to select variables that are associated with an outcome variable based on my new algorithm: LASSO_plus, 
+#'        and build up a model afterwards.
 #' @details This function is to use LASSO_plus algorithm to select variables that are assoicated with on an outcome variable for a given data set.
 #' An outcome variable could be a binary, continuous, or time-to-event variable. LASSO_plus selects variables based on LASSO, single variable regession, 
-#' and stepwise regression.  
+#' and stepwise regression. After variable selection, a model is built-up as well. 
 #' @param data A data matrix or a data frame, samples are in columns, and features/traits are in rows.
 #' @param standardization A logic variable to indicate if standardization is needed before variable selection, the default is FALSE.
 #' @param columnWise A logic variable to indicate if column wise or row wise normalization is needed, the default is TRUE, which us tod do column-wise normalization. 
@@ -13,6 +14,8 @@
 #' @param time Time variable name when outcome type is "time-to-event".
 #' @param event Event variable name when outcome type is "time-to-event".
 #' @param topN An interger to indicate how many variables we intend to select 
+#' @param outfile A string for the output file including path if necessary but without file type extension. 
+#' @param height An integer to indicate the forest plot height in inches
 #' @keywords variable selection
 #' @author Aixiang Jiang
 #' @return A model is returned: 
@@ -20,11 +23,9 @@
 #' @references 
 #' 
 #' @export
-#' 
-#' wrote code first, later, update the above section
 
 LASSO_plus = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomks = NULL, outcomeType = c("binary","continuous","time-to-event"), 
-                     Y = NULL, time = NULL, event = NULL, topN = 10, outfile = "someName", height = 6){
+                     Y = NULL, time = NULL, event = NULL, topN = 10, outfile = "nameWithPath", height = 6){
 
   if(is.null(data)){
     stop("Please input a data set")
@@ -62,29 +63,6 @@ LASSO_plus = function(data = NULL, standardization = FALSE, columnWise = TRUE, b
   acoeOut = gsub("pdf", "csv", aplot)
   write.csv(acoe, acoeOut)
   fit = alls[[1]]
-  return(fit) ## save the model and coefs for future use
+  return(fit) 
 }
 
-
-############# testing code, will remove later ###########
-## read in data first:
-library(rstudioapi)
-current_working_dir = dirname(rstudioapi::getActiveDocumentContext()$path)
-# "/Users/aijiang/Desktop/AJworking/SepOct2022/varSelectPred_SepOct2022/varSelectPred_package/varSelectPred/R"
-setwd(current_working_dir)
-dat = read.csv("../../exampleData/proteinPerc_ASCT1_postBMTFFS_49ids_20220331.csv", header = T, row.names = 1, stringsAsFactors = F)
-tmp = grep("Percent$", colnames(dat))
-vars = colnames(dat)[tmp]
-
-
-## binary
-LASSO_plus(data = dat, biomks = vars, Y =  "CODE_postBMTFFS", outfile = "binaryOutcome_20221031")
-
-## continuous
-LASSO_plus(data = dat, biomks = vars, outcomeType = "continuous", Y =  "postBMTFFS", outfile = "continousOutcome_20221031")
-
-## time to event
-LASSO_plus(data = dat, biomks = vars, outcomeType = "time-to-event", time = "postBMTFFS",  event = "CODE_postBMTFFS", 
-           outfile = "timeToEvenOutcome_20221031")
-
-## all right, all functions work!

@@ -1,7 +1,6 @@
 #' A function rather aimed at developers
 #' @noRd
-#' 
-#' 
+
 
 glmBinary = function(datain, Yin, Xin){
   ## datain is a data frame

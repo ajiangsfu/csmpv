@@ -1,7 +1,5 @@
 #' A function rather aimed at developers
 #' @noRd
-#' 
-#' 
 
 coxTimeToEvent = function(datain, time, event, Xin){
   ## datain is a data frame

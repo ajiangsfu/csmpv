@@ -33,6 +33,8 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   aout = NA
   alls = NA
   
+  outcomeType = outcomeType[1]
+  
   if(outcomeType == "binary"){
     ## check one variable at a time
     aout = lapply(biomks, function(aX){

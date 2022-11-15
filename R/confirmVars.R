@@ -76,7 +76,7 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   ## combine all models together for forest plot
   fitout = lapply(aout, function(xx){
     xx= xx[[1]]
-    xx = forestmodel::forest_model(xx, format_options = forest_model_format_options(text_size= 4, point_size = 4)) +
+    xx = forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
       theme(axis.text.x = element_text(size=4))
     return(xx)
   }) 

@@ -18,7 +18,6 @@
 #' @author Aixiang Jiang
 #' 
 #' @references 
-#' 
 #' @export
 
 confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomks = NULL, allmks = FALSE, 

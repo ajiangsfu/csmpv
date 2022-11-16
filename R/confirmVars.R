@@ -77,17 +77,14 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
     xx= xx[[1]]
     xx = forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
       theme(axis.text.x = element_text(size=4))
-    dev.off()
-    return(xx)
+    invisible(xx)
   }) 
   
   kk = length(fitout)
   
   outplot = paste0(outfile, "3.pdf")
-  pdf(outplot, height = kk, width = 7)
   ggpubr::ggarrange(plotlist = fitout, ncol=1, nrow=kk)
-  dev.off()
-  
+  ggsave(outplot, height = kk, width = 7) ## use ggsave instead of pdf + dev.off()
   ## combine all numbers together to write out
   coeout = lapply(aout, function(xx){
     xx= xx[[2]]
@@ -107,10 +104,9 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   xx= alls[[1]]
   if(allmks){
     aplot = paste("allMarks",outplot, sep="_")
-    pdf(aplot, height = ceiling(kk/2), width = 7)
     forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
       theme(axis.text.x = element_text(size=4))
-    dev.off()
+    ggsave(aplot, height = ceiling(kk/2), width = 7)
     acoe = alls[[2]]
     acoeOut = gsub("pdf", "csv", aplot)
     write.csv(acoe, acoeOut)

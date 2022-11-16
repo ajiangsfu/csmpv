@@ -7,7 +7,7 @@ Maintainer: Aixiang Jiang <aijiang@bccrc.ca> <jiangaixiang@gmail.com>
 Depends: R (>= 4.0)
 Suggests: knitr
 VignetteBuilder: knitr
-Imports: survival, glmnet, Hmisc, rms, forestmodel, ggplot2
+Imports: survival, glmnet, Hmisc, rms, forestmodel, ggplot2, ggpubr
 Description: 
     This package is used for known biomarker confirmation, novel biomarker discovery with variable selection, biomarker predictive model
     buildup, prediction and validation. All analysis is done at sample or patient level for either binary, or contiunous, or time-to-event outcome. 
@@ -18,6 +18,6 @@ Description:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2
 NeedsCompilation: no
 Packaged: 2022-11-14 23:23:34 UTC; ajiang

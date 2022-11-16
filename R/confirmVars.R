@@ -84,7 +84,7 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   
   outplot = paste0(outfile, "3.pdf")
   pdf(outplot, height = kk, width = 7)
-  ggarrange(plotlist = fitout, ncol=1, nrow=kk)
+  ggpubr::ggarrange(plotlist = fitout, ncol=1, nrow=kk)
   dev.off()
   
   ## combine all numbers together to write out

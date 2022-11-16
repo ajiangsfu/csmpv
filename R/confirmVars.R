@@ -104,7 +104,7 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   write.csv(coes, coeout)
 
   xx= alls[[1]]
-  if(allmarks){
+  if(allmks){
     aplot = paste("allMarks",outplot, sep="_")
     pdf(aplot, height = ceiling(kk/2), width = 7)
     forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +

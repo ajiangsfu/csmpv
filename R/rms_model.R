@@ -180,7 +180,7 @@ rms_model = function(afit, data = NULL, newdata = NULL, newY = FALSE, u = 2, out
       tmp = tmp[[1]][2]
       tmp = gsub(" ", "", tmp) ## finally we get Y var name
       ## the example: for "counts ~ outcome + treatment", toString of it: "~, counts, outcome + treatment"
-      pred.logit = predict(newfit, newdata = newdata) ## this is model score
+      pred.logit = stats::predict(newfit, newdata = newdata) ## this is model score
       phat = 1/(1+exp(-pred.logit)) # this is prob
       write.csv(phat, paste0(outfile,"Prob_posGroup_newData.csv"))
       
@@ -223,7 +223,7 @@ rms_model = function(afit, data = NULL, newdata = NULL, newY = FALSE, u = 2, out
       tmp = strsplit(toString(aform), split = ",")
       tmp = tmp[[1]][2]
       tmp = gsub(" ", "", tmp) ## finally we get Y var name
-      yhat = predict(newfit, newdata = newdata) ## this is model score
+      yhat = stats::predict(newfit, newdata = newdata) ## this is model score
       write.csv(yhat, paste0(outfile,"predicted_modelScore_newData.csv"))
       
       if(newY){
@@ -248,7 +248,7 @@ rms_model = function(afit, data = NULL, newdata = NULL, newY = FALSE, u = 2, out
   if(is.null(newdata)){
     newdata = data
   }
-  prediction = predict(newfit, newdata = newdata) ## when new data is NULL, use the current data for "prediction"
+  prediction = stats::predict(newfit, newdata = newdata) ## when new data is NULL, use the current data for "prediction"
 
   modelout = data.frame(anova(newfit))
   validation = rms::validate(newfit, B = 200)

@@ -116,7 +116,7 @@ XGBtraining = function(data, biomks = NULL,outcomeType = c("binary","continuous"
   sink()
   
   
-  pn = predict(modeln, Dtrain)
+  pn = stats::predict(modeln, Dtrain)
   
   #outs = list(modeln, pn, data[,Y], outcomeType)
   outs = list(modeln, pn, Y, outcomeType)

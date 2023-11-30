@@ -59,7 +59,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
   # ## make some basic transformation and call validation function for each outcome type
   if(outcomeType == "continuous"){
     fullvars = lassoObj$modelObj$beta@Dimnames[[1]]
-    model_score = predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
+    model_score = stats::predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
     model_score = model_score[,1]
     
     ## validation step: only when newY = true, otherwise, return: outs = list(model_score)
@@ -72,7 +72,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
 
   }else if(outcomeType == "binary"){
     fullvars = lassoObj$modelObj$beta@Dimnames[[1]]
-    model_score = predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
+    model_score = stats::predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
     model_score = model_score[,1]
     
     pos_prob = 1/(1+exp(-model_score))
@@ -84,7 +84,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
     }
   }else if(outcomeType == "time-to-event"){
     fullvars = lassoObj$modelObj$beta@Dimnames[[1]]
-    model_score = predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
+    model_score = stats::predict(object = lassoObj$modelObj, newx = data.matrix(newdata[,fullvars]))
     model_score = model_score[,1]
     
     risk_score = exp(model_score)

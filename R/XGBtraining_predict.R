@@ -28,7 +28,7 @@ XGBtraining_predict = function(xgbtrainingObj = NULL, newdata = NULL, newY = FAL
   }
   testdat = newdata[,xgbtrainingObj$XGBoost_model$feature_names]
   test = xgboost::xgb.DMatrix(data.matrix(testdat))
-  scores = predict(xgbtrainingObj$XGBoost_model, test) 
+  scores = stats::predict(xgbtrainingObj$XGBoost_model, test) 
   ## use default, for continuous, this is model score; for binary, this is prob of the positive class; 
   ##   for time to event, this is risk score
   names(scores) = rownames(newdata)

@@ -22,7 +22,7 @@ XGBplus_cox = function(data, varsIn, time, event, nrounds = 5 ) {
     # If 2, xgboost will print information of both performance and construction progress information
   )
   
-  pn = predict(modeln, Dtrain)
+  pn = stats::predict(modeln, Dtrain)
   
   ### next step, find stable highs and lows with 3 methods, should put all of them into the above R function, with given XGBoost score, 
   ## 1) mclust

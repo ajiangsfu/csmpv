@@ -1,6 +1,4 @@
 #' A function rather aimed at developers
-#' @import mclust 
-#' @import survival
 #' @noRd
 #' 
 

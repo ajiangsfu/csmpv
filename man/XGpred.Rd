@@ -7,6 +7,7 @@
 XGpred(
   data = NULL,
   varsIn = NULL,
+  selection = FALSE,
   time = NULL,
   event = NULL,
   nrounds = 5,
@@ -18,6 +19,8 @@ XGpred(
 \item{data}{A data matrix or a data frame, samples are in rows, and features/traits are in columns}
 
 \item{varsIn}{A vector of variables used for prediction model}
+
+\item{selection}{Logical. If TRUE, variable selection is performed using LASSO2.}
 
 \item{time}{Time variable name}
 
@@ -31,8 +34,8 @@ XGpred(
 }
 \value{
 A list is returned with the following seven items:
-\item{XGBplus}{XGBplus object}
-\item{stables}{Stabel high and low risk group samples identified by XGBplus}
+\item{ranks}{Ranks from XGboost and Cox}
+\item{twoEnds}{High and low risk group samples identified by mean ranks from XGBoost and Cox models}
 \item{weights}{Weights for each variables used in the model}
 \item{modelPars}{Mean and standard error of model scores for each risk group}
 \item{XGpred_score}{Model XGpred score}
@@ -41,12 +44,17 @@ A list is returned with the following seven items:
 \item{probcut}{Probability cutoff for risk group classification}
 }
 \description{
-The XGpred function serves as a wrapper for our novel XGpred algorithm. This algorithm combines XGBoost, clustering, and survival probability prediction
-to create stable high and low-risk groups based on survival data. These groups are subsequently filtered and leveraged for constructing two models: an XGpred linear prediction score model and an empirical Bayesian-based binary risk classification model.
+The XGpred function is designed to generate an empirical Bayesian-based binary risk classification model with survival data based on our novel XGpred algorithm, 
+combining XGBoost and traditional survival analysis.
 }
 \details{
-It's important to note that this function does not include a variable selection step. All provided variables will be used in constructing the predictive models.
-If variable selection is desired, the LASSO_plus function within the csmpv R package can be called.
+If variable selection is needed, the LASSO2 algorithm is processed. The given variable or the LASSO2 selected variable list is used to build both an XGBoost model
+and a traditional Cox model. Risk scores for each model are calculated and ranked separately. The ranks are then averaged for each sample. 
+The top 1/3 samples are defined as the high-risk group, while the low 1/3 samples are defined as the low-risk group. 
+The binary risk classification model is built based on the two risk groups using the given variable or the LASSO2 selected variable list. 
+The model is a linear combination of these variables, with weights as t values from the single-variable linear model of each variable on the two groups. 
+Finally, the classification is based on empirical Bayesian probabilities.
+#'
 }
 \references{
 Tianqi Chen and Carlos Guestrin, "XGBoost: A Scalable Tree Boosting System", 22nd SIGKDD Conference on Knowledge Discovery and Data Mining, 2016, https://arxiv.org/abs/1603.02754

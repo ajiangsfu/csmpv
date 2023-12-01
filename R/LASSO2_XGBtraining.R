@@ -24,11 +24,6 @@
 #' @param max_depth The maximum depth of a tree in the XGBoost model.
 #' @param eta The learning rate for the XGBoost model.
 #' @param outfile A string for the output file, including the path if necessary, but without the file type extension.
-#' @import glmnet
-#' @import xgboost
-#' @import mclust 
-#' @import survival
-#' @importFrom Matrix nnzero
 #' @author Aixiang Jiang
 #' @return A list is returned:
 #' \item{XGBoost_model}{An XGBoost model}

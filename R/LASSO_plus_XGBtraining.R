@@ -27,10 +27,6 @@
 #'  For a continuous outcome variable, this is a vector of the estimated continuous values; 
 #'  for a binary outcome variable, this is a vector representing the probability or log-odds of the positive class;
 #'  for time-to-event outcome, this is a vector of risk scores}
-#' @import glmnet
-#' @import xgboost
-#' @import mclust 
-#' @import survival
 #' @author Aixiang Jiang
 
 #' @references 

@@ -1,13 +1,13 @@
 Package: csmpv
 Type: Package
 Title: Biomarker Confirmation, Selection, Modelling, Prediction, and Validation
-Version: 2.1.2
+Version: 1.0.0
 Author: Aixiang Jiang [aut, cre, cph] (<https://orcid.org/0000-0002-6153-7595>)
 Maintainer: Aixiang Jiang <aijiang@bccrc.ca>
 Depends: R (>= 4.3.0), stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
-Imports: survival, glmnet, Hmisc, rms, forestmodel, ggplot2, ggpubr, survminer, mclust, xgboost, scales, Matrix
+Imports: survival, glmnet, Hmisc, rms, forestmodel, ggplot2, ggpubr, survminer, xgboost, scales, Matrix
 Description: 
    This package serves diverse purposes, including biomarker confirmation, novel biomarker discovery, constructing predictive models, model-based prediction, and validation. 
    It handles binary, continuous, and time-to-event outcomes at the sample or patient level.

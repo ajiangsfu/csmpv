@@ -32,7 +32,6 @@
 
 #' @author Aixiang Jiang
 #' @import xgboost
-#' @import mclust 
 #' @import survival
 #' @references 
 #' Tianqi Chen and Carlos Guestrin, "XGBoost: A Scalable Tree Boosting System", 22nd SIGKDD Conference on Knowledge Discovery and Data Mining, 2016, https://arxiv.org/abs/1603.02754

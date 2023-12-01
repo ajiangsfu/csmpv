@@ -75,8 +75,8 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   ## combine all models together for forest plot
   fitout = lapply(aout, function(xx){
     xx= xx[[1]]
-    xx = forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
-      ggplot2::scale_y_continuous(labels = scales::number_format(accuracy = 0.0001)) +
+    xx = forestmodel::forest_model(xx, exclude_infinite_cis = FALSE,
+                                   format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
       ggplot2::theme(axis.text.x = ggplot2::element_text(size=4))
     invisible(xx)
   }) 
@@ -107,8 +107,8 @@ confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, 
   
   xx= alls[[1]]
   aplot = paste("allMarks",outplot, sep="_")
-  gplot = forestmodel::forest_model(xx, format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
-    ggplot2::scale_y_continuous(labels = scales::number_format(accuracy = 0.0001)) +
+  gplot = forestmodel::forest_model(xx, exclude_infinite_cis = FALSE,
+                                    format_options = forestmodel::forest_model_format_options(text_size= 4, point_size = 4)) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(size=4))
   ggpubr::ggexport(gplot, filename = aplot, height = ceiling(kk/2), width = 7)
   allplot = c(allplot, list(gplot))

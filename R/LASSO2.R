@@ -94,7 +94,8 @@ LASSO2 = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomk
     nk = nnzero(coef(alls)) - 1 ## for this model, we have intercept, so need to minus 1 to get pure number of selected variables
     
     if(nk < 2){
-      moreres = cbind(alls$lambda, alls$df)
+      tmpres = glmnet::glmnet(data.matrix(data[,vars]), y=as.numeric(data[,Y]), family = "binomial"))
+      moreres = cbind(tmpres$lambda, tmpres$df)
       min_nonzero_vars <- 2
       selected_lambda <- NULL
       for (i in 1:dim(moreres)[1]){
@@ -132,7 +133,8 @@ LASSO2 = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomk
     nk = nnzero(coef(alls)) - 1 ## for this model, we have intercept, so need to minus 1 to get pure number of selected variables
     
     if(nk < 2){
-      moreres = cbind(alls$lambda, alls$df)
+      tmpres = glmnet::glmnet(data.matrix(data[,vars]), y=as.numeric(data[,Y]))
+      moreres = cbind(tmpres$lambda, tmpres$df)
       min_nonzero_vars <- 2
       selected_lambda <- NULL
       for (i in 1:dim(moreres)[1]){
@@ -169,7 +171,8 @@ LASSO2 = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomk
     nk = nnzero(coef(alls))  ## for this model, no intercept
     
     if(nk < 2){
-      moreres = cbind(alls$lambda, alls$df)
+      tmpres = glmnet::glmnet(x= data.matrix(data[,vars]), y= surObj, family = "cox", type.measure = "C")
+      moreres = cbind(tmpres$lambda, tmpres$df)
       min_nonzero_vars <- 2
       selected_lambda <- NULL
       for (i in 1:dim(moreres)[1]){

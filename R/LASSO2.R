@@ -94,7 +94,7 @@ LASSO2 = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomk
     nk = nnzero(coef(alls)) - 1 ## for this model, we have intercept, so need to minus 1 to get pure number of selected variables
     
     if(nk < 2){
-      tmpres = glmnet::glmnet(data.matrix(data[,vars]), y=as.numeric(data[,Y]), family = "binomial"))
+      tmpres = glmnet::glmnet(data.matrix(data[,vars]), y=as.numeric(data[,Y]), family = "binomial")
       moreres = cbind(tmpres$lambda, tmpres$df)
       min_nonzero_vars <- 2
       selected_lambda <- NULL

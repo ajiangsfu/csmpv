@@ -82,6 +82,7 @@ XGpred = function(data = NULL, varsIn = NULL, selection = FALSE, time = NULL, ev
   rownames(ranks) = rownames(data)
   rmeans = rowMeans(ranks)
   ranks = cbind(ranks, rmeans)
+  ranks = data.frame(ranks)
   
   ## get quantiles: 1/3 and 2/3
   q1 = stats::quantile(ranks$rmeans,1/3)

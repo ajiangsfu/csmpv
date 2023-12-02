@@ -80,7 +80,7 @@ XGpred = function(data = NULL, varsIn = NULL, selection = FALSE, time = NULL, ev
   
   ranks = cbind(xranks, cranks)
   rownames(ranks) = rownames(data)
-  rmeans = apply(ranks, 1,rowMeans)
+  rmeans = rowMeans(ranks)
   ranks = cbind(ranks, rmeans)
   
   ## get quantiles: 1/3 and 2/3

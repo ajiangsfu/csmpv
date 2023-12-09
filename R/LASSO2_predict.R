@@ -64,7 +64,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
     
     ## validation step: only when newY = true, otherwise, return: outs = list(model_score)
     names(model_score) = rownames(newdata)
-    outs = list(model_score)
+    outs = model_score
     if(newY){
       yy = newdata[,Y]
       outs = validation(predicted = model_score, outcomeType = "continuous", trueY = yy, outfile = outfile)
@@ -77,7 +77,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
     
     pos_prob = 1/(1+exp(-model_score))
     names(pos_prob) = rownames(newdata)
-    outs = list(pos_prob)
+    outs = pos_prob
     if(newY){
       yy = newdata[,Y]
       outs = validation(predicted = pos_prob, outcomeType = "binary", trueY = yy, outfile = outfile)
@@ -89,7 +89,7 @@ LASSO2_predict = function(lassoObj, newdata = NULL,newY = FALSE, u=2, outfile = 
     
     risk_score = exp(model_score)
     names(risk_score) = rownames(newdata)
-    outs = list(risk_score)
+    outs = risk_score
     if(newY){
       ttime = newdata[, time]
       eevent = newdata[, event]

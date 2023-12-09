@@ -27,6 +27,16 @@
 #'  Therneau, T., Grambsch, P., Modeling Survival Data: Extending the Cox Model. Springer-Verlag, 2000.
 #'  Kassambara A, Kosinski M, Biecek P (2021). survminer: Drawing Survival Curves using 'ggplot2'_. R package version 0.4.9,
 #'         <https://CRAN.R-project.org/package=survminer>.
+#' @examples
+#' data("datlist", package = "csmpv")
+#' tdat = datlist$training
+#' Xvars = c("highIPI","B.Symptoms","MYC.IHC","BCL2.IHC", "CD10.IHC","BCL6.IHC",
+#'           "MUM1.IHC","Male","AgeOver60", "stage3_4","PS1","LDH.Ratio1",
+#'           "Extranodal1","Bulk10cm","HANS_GCB", "DTI")
+#' # warning: results are saved locally
+#' bconfirm = confirmVars(data = tdat, biomks = Xvars, Y = "DZsig",
+#'                        outfile = "confirmBinary")
+
 #' @export
 
 confirmVars = function(data = NULL, standardization = FALSE, columnWise = TRUE, biomks = NULL,  

@@ -64,6 +64,20 @@ By default, this function runs all eight different modelling methods. However, u
 method of their choice. For clarity, when providing a "vdat" argument, the function assumes that it contains the outcome variable, and it proceeds with model
 validation.
 }
+\examples{
+data("datlist", package = "csmpv")
+tdat = datlist$training
+vdat = datlist$validation
+Xvars = c("IPI","B.Symptoms","MYC.IHC","BCL2.IHC", "CD10.IHC","BCL6.IHC",
+          "MUM1.IHC","Male","AgeOver60", "stage3_4","PS1","LDH.Ratio1",
+          "Extranodal1","Bulk10cm","HANS_GCB", "DTI")
+# warning: results are saved locally
+DZlassoreg = csmpvModelling(tdat = tdat, vdat = vdat,
+                            Ybinary = "DZsig", varsBinary = Xvars,
+                            methods = "LASSO2_reg",
+                            outfileName= "just_one")
+
+}
 \author{
 Aixiang Jiang
 }

@@ -68,6 +68,15 @@ A list is returned:
 This function performs variable selection using LASSO_plus, followed by building an XGBoost model.
 LASSO_plus is a method for variable selection, and XGBoost is a gradient boosting algorithm for modeling.
 }
+\examples{
+data("datlist", package = "csmpv")
+tdat = datlist$training
+vdat = datlist$validation
+Xvars = c("highIPI","B.Symptoms","MYC.IHC","BCL2.IHC", "CD10.IHC","BCL6.IHC",
+          "MUM1.IHC","Male","AgeOver60", "stage3_4","PS1","LDH.Ratio1",
+          "Extranodal1","Bulk10cm","HANS_GCB", "DTI")
+# warning: results are saved locally
+}
 \references{
 Friedman, J., Hastie, T. and Tibshirani, R. (2008) Regularization Paths for Generalized Linear Models via Coordinate Descent (2010), Journal of Statistical Software, Vol. 33(1), 1-22, doi:10.18637/jss.v033.i01.
   Simon, N., Friedman, J., Hastie, T. and Tibshirani, R. (2011) Regularization Paths for Cox's Proportional Hazards Model via Coordinate Descent, Journal of Statistical Software, Vol. 39(5), 1-13, doi:10.18637/jss.v039.i05.

@@ -49,6 +49,16 @@ have an impact on an outcome variable within a dataset. The outcome variable can
 continuous, or time-to-event. Note that this function is not intended for model confirmation,
 as it doesn't incorporate coefficients from previous research.
 }
+\examples{
+data("datlist", package = "csmpv")
+tdat = datlist$training
+Xvars = c("highIPI","B.Symptoms","MYC.IHC","BCL2.IHC", "CD10.IHC","BCL6.IHC",
+          "MUM1.IHC","Male","AgeOver60", "stage3_4","PS1","LDH.Ratio1",
+          "Extranodal1","Bulk10cm","HANS_GCB", "DTI")
+# warning: results are saved locally
+bconfirm = confirmVars(data = tdat, biomks = Xvars, Y = "DZsig",
+                       outfile = "confirmBinary")
+}
 \references{
 Hastie, T. J. and Pregibon, D. (1992) Generalized linear models. Chapter 6 of Statistical Models in S eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
  Therneau, T., Grambsch, P., Modeling Survival Data: Extending the Cox Model. Springer-Verlag, 2000.

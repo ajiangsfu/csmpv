@@ -8,6 +8,8 @@ Depends: R (>= 4.3.0), stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 Imports: survival, glmnet, Hmisc, rms, forestmodel, ggplot2, ggpubr, survminer, xgboost, scales, Matrix
+URL: https://github.com/ajiangsfu/csmpv
+BugReports: https://github.com/ajiangsfu/csmpv/issues
 Description: 
    This package serves diverse purposes, including biomarker confirmation, novel biomarker discovery, constructing predictive models, model-based prediction, and validation. 
    It handles binary, continuous, and time-to-event outcomes at the sample or patient level.

@@ -1,0 +1,73 @@
+#' Predicting Risk Group Classification for a New Data Set
+#' 
+#' @description The XGpred_predict function is designed to predict risk group classifications for a new data set. 
+#' This prediction is based on the assumption that an XGpred object is available from a training data set and
+#'  that the new data set is comparable to the training data set.
+#' 
+#' In scenarios where the new and training data sets are not directly comparable, a calibration cohort is required 
+#' to ensure accurate risk group predictions.
+#'
+#' @param newdat A data matrix or a data frame where samples are in rows and features/traits are in columns. 
+#' It should include all variables needed for the prediction model.
+#' @param XGpredObj An XGpred object returned by the XGpred function. Although not all items are needed for 
+#' prediction purposes, using the XGpred object as input is convenient.
+#' @param scoreShift A calibration value to subtract from the current model score if needed.
+#' @author Aixiang Jiang
+#' @return A data frame containing XGpred_score, XGpred_prob, and XGpred_prob_class
+#' @references 
+#'  Aoki T, Jiang A, Xu A et al.,(2023) Spatially Resolved Tumor Microenvironment Predicts Treatment Outcomes 
+#'  in Relapsed/Refractory Hodgkin Lymphoma. J Clin Oncol. 2023 Dec 19:JCO2301115. doi: 10.1200/JCO.23.01115. 
+#'  PMID: 38113419.
+
+#' @examples
+#' # Load in data sets:
+#' data("datlist", package = "csmpv")
+#' tdat = datlist$training
+#' vdat = datlist$validation
+#' 
+#' # The function saves files locally. You can define your own temporary directory. 
+#' # If not, tempdir() can be used to get the system's temporary directory.
+#' temp_dir = tempdir()
+#' # As an example, let's define Xvars, which will be used later:
+#' Xvars = c("highIPI", "B.Symptoms", "MYC.IHC", "BCL2.IHC", "CD10.IHC", "BCL6.IHC")
+
+#' # For given time-to-event outcome and Xvars, we can build up a binary risk classification:
+#'  xgobj = XGpred(data = tdat, varsIn = Xvars, 
+#'                time = "FFP..Years.",
+#'                 event = "Code.FFP", outfile = paste0(temp_dir, "/XGpred"))
+#'  tdat$XGpred_class = xgobj$XGpred_prob_class
+#' # You might save the files to the directory you want.
+#' 
+#'# Now, we can predict the risk classification for a new data set:
+#'  xgNew = XGpred_predict(newdat = vdat, XGpredObj = xgobj)
+#'
+#' #' # To delete the "temp_dir", use the following:
+#' unlink(temp_dir)
+
+
+#' @export
+
+XGpred_predict = function(newdat = NULL, XGpredObj = NULL, scoreShift = 0){
+ 
+  wts = XGpredObj$weights
+  XGpred_score = data.matrix(newdat[,names(wts)]) %*% wts
+  
+  XGpred_score = XGpred_score - scoreShift
+  
+  ## the following line is changed accordingly
+  XGpred_prob = getProb(XGpred_score, groupMeans = ( XGpredObj$modelPars)[,1], groupSds = ( XGpredObj$modelPars)[,2])
+  
+  nclass = XGpredObj$nclass
+  if(nclass == 3){
+    XGpred_prob_class = ifelse(XGpred_prob >= XGpredObj$probcut, "High", ifelse(XGpred_prob <= 1-XGpredObj$probcut, "Low", "Middle"))
+  }else{
+    XGpred_prob_class = ifelse(XGpred_prob >= XGpredObj$probcut, "High", "Low")
+  }
+  
+  ## XGpred_score, XGpred_prob, XGpred_prob_class
+  outs = data.frame(cbind(XGpred_score, XGpred_prob))
+  colnames(outs) = c("XGpred_score", "XGpred_prob")
+  outs$XGpred_prob_class = XGpred_prob_class[,1]
+  
+  return(outs)
+}
